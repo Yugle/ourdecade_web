@@ -1,7 +1,7 @@
 ---
 title: 2020篇
 order: 1
-toc: menu
+toc: false
 nav:
   title: 2020篇
   order: 1
