@@ -10,4 +10,9 @@ export default defineConfig({
   dynamicImport: {
     loading: '/src/components/loading',
   },
+  navs: [
+    null,
+    { title: 'GitHub', path: 'https://github.com/Yugle/ourdecade_web' },
+    { title: '胖虎的Blog', path: 'https://blog.yugle.fun' },
+  ],
 });
