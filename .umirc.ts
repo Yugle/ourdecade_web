@@ -11,7 +11,8 @@ export default defineConfig({
     loading: '/src/components/loading',
   },
   analytics: {
-    ga: 'G-3JS6FTX8FW',
+    ga: 'UA-214441743-1',
+    baidu: 'a5b475ca39010117070ca762aa70685f',
   },
   navs: [
     null,
