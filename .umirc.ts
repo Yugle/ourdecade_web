@@ -10,6 +10,9 @@ export default defineConfig({
   dynamicImport: {
     loading: '/src/components/loading',
   },
+  analytics: {
+    ga: 'G-3JS6FTX8FW',
+  },
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/Yugle/ourdecade_web' },
