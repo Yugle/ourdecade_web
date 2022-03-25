@@ -3,39 +3,64 @@ title: 2021篇
 order: 1
 toc: menu
 nav:
-  title: 2021篇正在征集...
+  title: 2021篇
   order: 2
 ---
 
-## 视频相关
+## Info
 
-### 视频期望
+源于丁太昇老师的十年纪录片计划的 Our Decade 视频征集计划来到了第二年。第二个年头，有的朋友来、有的朋友走，我想念他们但并不遗憾，因为我相信、我们都相信，在不久的将来我们定会再会！
 
-- 格式：横屏拍摄，画面比例最好为 16:9，分辨率在 1920×1080 以上（相机设置里可以设置）
-- 内容：
-  - 主体部分：内容随意。可以说这一年发生的事、印象深刻的事、有意义的事、对这一年的总结、对新一年的目标展望和计划等等
-  - 非必选部分：可以附上一些生活中拍的视频或照片，用来放在视频的开头或结尾
-  - 时长：随意。具体成片时会尽量保留全部，但不保证
+视频中包含了十三位朋友：朱光宇、韩建桥、马瑞迪/孙志伟、朱文博、闫子健、杨陈仪敏、张振宇、原操、盛璐、李岳洲、王润聪、刘佳（视频顺序）
 
-### 上传方式
+剪辑为内容紧凑，删减了部分朋友想说的话，也未能全部保留朋友们的说话语气和情绪，万望海涵。
 
-- [点击链接跳转，网页直接上传](https://www.wenshushu.cn/s/6u83ydfekdh)（⚠️ 建议）
-- 发送至邮箱ourdecade2020@163.com，若无法上传请选择超大附件
+期待小朱和他的朋友们明年再会。
 
-### 截止征集和出片时间
+## Video
 
-12 月 31 号截止征集，1 月 5 日左右出成品
+### BiliBili
 
-## 江湖征集令
+```tsx
+/**
+ * inline: true
+ */
+import React from 'react';
+import './index.less';
 
-一年过去了，不知你有没有再次品读《Our Decade》2020 篇。这份源于丁太升老师的计划，不知你是否还记得。更不知你翻寻记忆时，是否遗憾/庆幸/怀念往日，是否感叹今朝，是否期盼未来。
+export default () => (
+  <div className="wrapper">
+    <iframe
+      className="videoPlayer"
+      src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
+      allowfullscreen="allowfullscreen"
+      scrolling="no"
+      frameborder="0"
+      sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
+    ></iframe>
+  </div>
+);
+```
 
-嘿，朋友，我们好久不见你在哪里啊，最近过得怎么样？许久未联系，刚得知你有了新生活。我看，不妨再跟自己聊聊，跟大家讲讲？
+### YouTube
 
-这个活动主要是对自己的记录。对于你，可以看到自己的变化，意义是不言而喻的；对于我，这或许是我们之间十年的牵绊，等十年后希望我们还能坐在一起，带着自己的爱人和孩子，乐此不疲地畅谈过往。
+```tsx
+/**
+ * inline: true
+ */
+import React from 'react';
+import './index.less';
 
-今年是 2021 年，我们的人生正在发生转折。时间匆匆流转，它带走的记忆值得务必记录。回顾的意义，是让记忆的烙印更加深刻、让新的篇章站在巨人的肩膀上；期盼的意义，是让沉淀更加厚重、让未来更不迷茫。
-
-嘿，朋友，期待你再次参与或加入我们！希望我能坚持十年，希望你也能。
-
-朱光宇 于 2021.12.7
+export default () => (
+  <div className="wrapper">
+    <iframe
+      className="styles.videoPlayer"
+      src="https://www.youtube.com/embed/P_xhbtOwsPI"
+      title="YouTube"
+      frameborder="0"
+      allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+);
+```
