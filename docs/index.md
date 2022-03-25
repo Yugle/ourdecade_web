@@ -18,7 +18,7 @@ features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: Future
     desc: 期盼的意义，是让沉淀更加厚重、让未来更不迷茫
-footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
+footer: Copyright © 2022 Yugle | [鲁ICP备2021036616号-2](https://beian.miit.gov.cn/)
 ---
 
 ## 《Our Decade 2021 篇》江湖征集令
