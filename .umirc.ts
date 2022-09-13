@@ -4,7 +4,7 @@ export default defineConfig({
   title: 'Our Decade',
   favicon: '/favicon.ico',
   logo: '/logo.png',
-  outputPath: 'docs-dist',
+  outputPath: 'dist',
   mode: 'site',
   mfsu: {},
   dynamicImport: {
