@@ -1,0 +1,1 @@
+(self["webpackChunkourdecade"]=self["webpackChunkourdecade"]||[]).push([[336],{22231:function(e,u,c){"use strict";c.d(u,{m:function(){return n.m}});var n=c(9684);c(72255)}}]);
