@@ -1,5 +1,5 @@
 ---
-title: Our Decade - 我们的十年
+title: Our Decade - 我们的十年 - 个人专业学习记录
 hero:
   title: Our Decade - 我们的十年
   desc: Our Decade 视频征集计划
