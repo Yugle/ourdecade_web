@@ -17,6 +17,6 @@ export default defineConfig({
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/Yugle/ourdecade_web' },
-    { title: '胖虎的Blog', path: 'https://blog.yugle.fun' },
+    { title: '胖虎的Blog', path: 'https://blog.ourdecade.cn' },
   ],
 });
