@@ -2,7 +2,7 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   title: 'Our Decade',
-  favicon: '/favicon.ico',
+  favicon: '/logo.ico',
   logo: '/logo.png',
   outputPath: 'dist',
   mode: 'site',
