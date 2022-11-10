@@ -3,7 +3,7 @@
   "name": "ourdecade",
   "version": "1.0.0",
   "scripts": {
-    "start": "dumi dev",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "dumi build",

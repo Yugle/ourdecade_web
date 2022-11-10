@@ -2,7 +2,7 @@
 title: Our Decade - 我们的十年 - 个人专业学习记录
 hero:
   title: Our Decade - 我们的十年
-  desc: Our Decade 视频征集计划
+  desc: Our Decade 视频征集计划 2022篇敬请期待
   actions:
     - text: 2020篇
       link: /2020
