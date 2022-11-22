@@ -17,7 +17,7 @@ export default defineConfig({
   navs: [
     // null, 若为null, 则开启navs嗅探模式
     {
-      title: '2022篇敬请期待',
+      title: '2022篇征集中',
       path: '/2022',
     },
     {

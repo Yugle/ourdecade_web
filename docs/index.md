@@ -2,12 +2,12 @@
 title: Our Decade - 我们的十年 - 个人专业学习记录
 hero:
   title: Our Decade - 我们的十年
-  desc: Our Decade 视频征集计划 2022篇敬请期待
+  desc: Our Decade 视频征集计划
   actions:
-    - text: 2020篇
+    - text: 往期
       link: /2020
-    - text: 2021篇
-      link: /2021
+    - text: 2022篇征集中
+      link: /2022
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/f093e060-726e-471c-a53e-e988ed3f560c/kj9t9sk7_w144_h144.png
     title: Past
