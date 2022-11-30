@@ -29,7 +29,7 @@ import React from 'react';
 import './index.less';
 
 export default () => (
-  <div className="wrapper">
+  <div className="videoWrapper">
     <iframe
       className="videoPlayer"
       src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
@@ -52,7 +52,7 @@ import React from 'react';
 import './index.less';
 
 export default () => (
-  <div className="wrapper">
+  <div className="videoWrapper">
     <iframe
       className="styles.videoPlayer"
       src="https://www.youtube.com/embed/P_xhbtOwsPI"
