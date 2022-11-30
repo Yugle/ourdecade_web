@@ -12,7 +12,7 @@ export default defineConfig({
   },
   analytics: {
     ga: 'UA-214441743-1',
-    baidu: 'a5b475ca39010117070ca762aa70685f',
+    baidu: '3a6fc54668c58586f68b7c17edc2a7a2',
   },
   navs: [
     // null, 若为null, 则开启navs嗅探模式
