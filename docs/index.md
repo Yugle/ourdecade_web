@@ -5,7 +5,7 @@ hero:
   desc: Our Decade 视频征集计划
   actions:
     - text: 往期
-      link: /2020
+      link: /summary
     - text: 2022篇征集中
       link: /2022
 features:
