@@ -42,6 +42,8 @@ export default () => (
 );
 ```
 
+[去 BiliBili 观看](https://b23.tv/MNA2cT8)
+
 ### YouTube
 
 ```tsx
@@ -64,3 +66,5 @@ export default () => (
   </div>
 );
 ```
+
+[去 YouTube 观看](https://youtu.be/_ElZriYAqQU)
