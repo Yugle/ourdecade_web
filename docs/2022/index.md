@@ -1,5 +1,5 @@
 ---
-title: 2022篇征集中
+title: 2022篇
 order: 1
 toc: menu
 nav:
@@ -7,33 +7,66 @@ nav:
   order: 3
 ---
 
-## 视频相关
+## Info
 
-### 视频期望
+源于丁太昇老师的十年纪录片计划的 Our Decade 视频征集计划来到了第三年。第三个年头，又有朋友来、又有朋友走。来的朋友我欢迎，我们一起携手通行；走的朋友我想念，但并不遗憾。
 
-- 格式：横屏拍摄，画面比例为 16:9，分辨率最好为 4k (3840\*2160) 以上，帧率为 30fps 以上，最好为 60fps（为保证成片效果和历史发展性，请在相机设置中完成该操作）
-- 内容：内容随意。可以说这一年发生印象深刻的事、对这一年的总结、对新一年的目标展望和计划、对计划完成时的自己想说的等等
-- 时长：随意。具体成片时会尽量保留全部，但不保证
+视频中包含了十三位朋友：朱光宇、王润聪、张妍、张振宇、张宝生、杨陈仪敏、闫子健、李岳洲、刘佳、原操、朱文博、王嘉炜、盛璐（视频顺序）
 
-### 上传方式
+剪辑为内容紧凑，删减了部分朋友想说的话，也未能全部保留朋友们的说话语气和情绪，万望海涵。
 
-- [点击链接上传](https://musetransfer.com/c/ljbvmuzan)<Badge>建议</Badge>
-- 发送至邮箱ourdecade2020@163.com，若无法上传请选择超大附件
+我想，在不远的七年后，可能我们欢聚一堂，共同回顾这令人感慨的十年。
 
-### 截止和成片时间
+我相信、我们都相信，在不久的将来我们定会再会！
 
-由于部分朋友身体不适，1 月 5 日截止征集，1 月 10 日左右成片
+## Video
 
-## 江湖召集令
+### BiliBili
 
-我很庆幸《OurDecade》来到了第三年。从朋友们开始读研或工作开始，这件事已经成为一些朋友年底必做的事。他们之间有的找到了工资尚可的工作，有的将要拥有自己的家庭，有的仍在寻找着未来……
+```tsx
+/**
+ * inline: true
+ */
+import React from 'react';
+import './index.less';
 
-嘿，朋友，我们好久不见你在哪里啊，最近过得怎么样？许久未联系，刚得知你有了新生活。我看，不妨再跟自己聊聊，跟大家讲讲？
+export default () => (
+  <div className="videoWrapper">
+    <iframe
+      className="videoPlayer"
+      src="//player.bilibili.com/player.html?aid=692487592&bvid=BV1y24y1e74y&cid=954413489&page=1&high_quality=1&danmaku=1"
+      allowfullscreen="allowfullscreen"
+      scrolling="no"
+      frameborder="0"
+      sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
+    ></iframe>
+  </div>
+);
+```
 
-这个活动主要是对自己的记录。对于你，可以看到自己的变化，意义是不言而喻的；对于我，这或许是我们之间十年的牵绊，等十年后希望我们还能坐在一起，带着自己的爱人和孩子，乐此不疲地畅谈过往。
+[去 BiliBili 观看](https://b23.tv/)
 
-今年是 2022 年，我们的人生正在发生转折。时间匆匆流转，明天的人生将在昨天这份土壤上茁壮成长，留住过往，未来的人生值得想象。记忆必须存留，而影像是记忆长久存留的唯一方式。我想，在不远的七年后，你会与我同样庆幸。
+<!-- ### YouTube
 
-嘿，我的朋友，期待你继续参与或加入我们！希望我能坚持十年，希望你也能。
+```tsx
+/**
+ * inline: true
+ */
+import React from 'react';
+import './index.less';
 
-<b>朱光宇 于 2022.12.1<b/>
+export default () => (
+  <div className="videoWrapper">
+    <iframe
+      className="styles.videoPlayer"
+      src="https://www.youtube.com/embed/P_xhbtOwsPI"
+      title="YouTube"
+      frameborder="0"
+      allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+);
+```
+
+[去 YouTube 观看](https://youtu.be/P_xhbtOwsPI) -->

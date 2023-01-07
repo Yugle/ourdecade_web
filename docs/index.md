@@ -6,7 +6,7 @@ hero:
   actions:
     - text: 往期
       link: /summary
-    - text: 2022篇征集中
+    - text: 2022篇
       link: /2022
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/f093e060-726e-471c-a53e-e988ed3f560c/kj9t9sk7_w144_h144.png
