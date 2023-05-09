@@ -1,29 +1,20 @@
-# ourdecade
+# Ourdecade
 
-Our Decade前端页面，Power By [dumi](https://d.umijs.org/zh-CN)
+A static site base on [dumi](https://d.umijs.org).
 
-## Getting Started
-
-Install dependencies,
+## Development
 
 ```bash
-$ npm i
+# install dependencies
+$ yarn install
+
+# start dev server
+$ yarn start
+
+# build docs
+$ yarn run build
 ```
 
-Start the dev server,
+## LICENSE
 
-```bash
-$ npm start
-```
-
-Build documentation,
-
-```bash
-$ npm run docs:build
-```
-
-Build library via `father-build`,
-
-```bash
-$ npm run build
-```
+MIT
