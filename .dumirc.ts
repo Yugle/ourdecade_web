@@ -5,7 +5,7 @@ export default defineConfig({
     name: 'Our Decade',
     favicon: '/favicon.ico',
     logo: '/logo.png',
-    footer: `Copyright © 2022 Yugle | <a href="https://beian.miit.gov.cn/">鲁ICP备2021036616号-3</a>`,
+    footer: `Copyright © 2020-Present Yugle | <a href="https://beian.miit.gov.cn/">鲁ICP备2021036616号-3</a>`,
     nav: [
       // null, 若为null, 则开启navs嗅探模式
       {
