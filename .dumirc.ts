@@ -29,6 +29,7 @@ export default defineConfig({
       github: 'https://github.com/Yugle/ourdecade_web'
     }
   },
+  theme: { '@c-primary': '#1A73E8' },
   metas: [
     {
       name: 'viewport',
