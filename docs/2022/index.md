@@ -27,7 +27,6 @@ nav:
 /**
  * inline: true
  */
-import React from 'react';
 import './index.less';
 
 export default () => (
@@ -44,22 +43,21 @@ export default () => (
 );
 ```
 
-[去 BiliBili 观看](https://b23.tv/)
+[去 BiliBili 观看](https://b23.tv/BV1y24y1e74y)
 
-<!-- ### YouTube
+### YouTube
 
 ```tsx
 /**
  * inline: true
  */
-import React from 'react';
 import './index.less';
 
 export default () => (
   <div className="videoWrapper">
     <iframe
       className="styles.videoPlayer"
-      src="https://www.youtube.com/embed/P_xhbtOwsPI"
+      src="https://www.youtube.com/embed/6Z50cRSIOYw"
       title="YouTube"
       frameborder="0"
       allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -69,4 +67,4 @@ export default () => (
 );
 ```
 
-[去 YouTube 观看](https://youtu.be/P_xhbtOwsPI) -->
+[去 YouTube 观看](https://youtu.be/6Z50cRSIOYw)
