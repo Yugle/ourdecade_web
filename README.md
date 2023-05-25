@@ -1,6 +1,6 @@
 # Ourdecade
 
-A static site base on [dumi](https://d.umijs.org).
+这是一个长达十年的视频征集计划，目的是记录朋友们十年的变化
 
 ## Development
 
