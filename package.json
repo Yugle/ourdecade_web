@@ -1,16 +1,13 @@
 {
   "name": "ourdecade",
   "version": "2.0.0",
-  "scripts": {
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && yarn dev",
-    "dev": "dumi dev",
-    "build": "dumi build",
-    "prepare": "husky install && dumi setup"
-  },
-  "authors": [
-    "yugle@ourdecade.cn"
-  ],
   "license": "MIT",
+  "scripts": {
+    "build": "dumi build",
+    "dev": "dumi dev",
+    "prepare": "husky install && dumi setup",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && yarn dev"
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -26,7 +23,11 @@
     "@commitlint/config-conventional": "^17.1.0",
     "dumi": "^2.1.22",
     "husky": "^8.0.1",
+    "less-loader": "^11.1.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
-  }
+  },
+  "authors": [
+    "yugle@ourdecade.cn"
+  ]
 }

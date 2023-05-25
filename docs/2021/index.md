@@ -19,52 +19,32 @@ nav:
 
 ## Video
 
-### BiliBili
+```tsx
+/**
+ * inline: true
+ */
+import VideoPlayer, { Platform } from '@/components/video_player';
+
+export default () => (
+  <VideoPlayer
+    src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
+    shareUrl="https://b23.tv/P0xIByb"
+    platform={Platform.Bilibili}
+  />
+);
+```
 
 ```tsx
 /**
  * inline: true
  */
-import React from 'react';
-import './index.less';
+import VideoPlayer, { Platform } from '@/components/video_player';
 
 export default () => (
-  <div className="videoWrapper">
-    <iframe
-      className="videoPlayer"
-      src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
-      allowfullscreen="allowfullscreen"
-      scrolling="no"
-      frameborder="0"
-      sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
-    ></iframe>
-  </div>
+  <VideoPlayer
+    src="https://www.youtube.com/embed/P_xhbtOwsPI"
+    shareUrl="https://youtu.be/P_xhbtOwsPI"
+    platform={Platform.YouTube}
+  />
 );
 ```
-
-[去 BiliBili 观看](https://b23.tv/P0xIByb)
-
-### YouTube
-
-```tsx
-/**
- * inline: true
- */
-import React from 'react';
-import './index.less';
-
-export default () => (
-  <div className="videoWrapper">
-    <iframe
-      className="styles.videoPlayer"
-      src="https://www.youtube.com/embed/P_xhbtOwsPI"
-      title="YouTube"
-      frameborder="0"
-      allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-  </div>
-);
-```
-
-[去 YouTube 观看](https://youtu.be/P_xhbtOwsPI)

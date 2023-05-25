@@ -38,33 +38,7 @@ export default defineConfig({
     },
   ],
   styles: [
-    `@media (max-width: 768px) {
-      .videoWrapper {
-          width: 100%;
-          padding-bottom: 56.3%;
-      }
-    }
-    @media (min-width: 769px) {
-      .videoWrapper{
-        width: 50%;
-        padding-bottom: 33%; 
-      }
-    }
-    .videoWrapper {
-      position: relative;
-    }    
-    .videoPlayer {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-    }
-    
+    `
     .dumi-default-header-content {
       gap: 40px;
     }
