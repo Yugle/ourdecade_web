@@ -14,8 +14,8 @@ export default defineConfig({
       },
       {
         title: '往期',
-        link: '/summary'
-      }
+        link: '/summary',
+      },
       // {
       //   title: '往期',
       //   nav: [
@@ -26,8 +26,8 @@ export default defineConfig({
       // { title: '胖虎的Blog', link: 'https://blog.ourdecade.cn' },
     ],
     socialLinks: {
-      github: 'https://github.com/Yugle/ourdecade_web'
-    }
+      github: 'https://github.com/Yugle/ourdecade_web',
+    },
   },
   theme: { '@c-primary': '#1A73E8' },
   metas: [
@@ -36,19 +36,5 @@ export default defineConfig({
       content:
         'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
     },
-  ],
-  styles: [
-    `
-    .dumi-default-features-item {
-      text-align: center;
-    }
-    
-    .dumi-default-header-content {
-      gap: 40px;
-    }
-    
-    .dumi-default-header-left {
-      width: unset !important;
-    }`,
-  ],
+  ]
 });
