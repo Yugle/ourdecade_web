@@ -6,7 +6,7 @@ Our Decade 视频征集计划是一个长达十年的计划，目的是记录朋
 
 ## 往期
 
-<img src="https://ourdecade.cn/cover.webp"></img>
+<img src="https://ourdecade.cn/covers.webp"></img>
 
 ## LICENSE
 
