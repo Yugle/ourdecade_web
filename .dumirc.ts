@@ -39,6 +39,10 @@ export default defineConfig({
   ],
   styles: [
     `
+    .dumi-default-features-item {
+      text-align: center;
+    }
+    
     .dumi-default-header-content {
       gap: 40px;
     }
