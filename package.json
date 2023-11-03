@@ -19,7 +19,8 @@
         ]
     },
     "dependencies": {
-        "antd": "^5.7.0"
+        "antd": "^5.7.0",
+        "cos-js-sdk-v5": "^1.4.21"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
