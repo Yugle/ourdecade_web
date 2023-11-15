@@ -23,6 +23,7 @@ export default () => {
     const [uploadingStatus, setUploadingStatus] = useState(
         UPLOAD_STATUS.NOT_START,
     )
+    const [bandWidth, setBandWidth] = useState(0)
 
     const unableToDelete =
         uploadingStatus == UPLOAD_STATUS.UPLOADING ||
@@ -50,6 +51,18 @@ export default () => {
             window.removeEventListener('beforeunload', handleBeforeUnload)
         }
     }, [])
+
+    const beforeUpload = (file: File) => {
+        if (!file.type.startsWith('video/')) {
+            api['error']({
+                message: '只支持上传视频文件',
+            })
+
+            return Upload.LIST_IGNORE
+        }
+
+        return false
+    }
 
     const parseThumbnail = (fileList: UploadFile[]) => {
         const videoURL = URL.createObjectURL(fileList[0].originFileObj!!)
@@ -80,9 +93,9 @@ export default () => {
     const hasFileSelected = fileList && fileList.length > 0
 
     const startUpload = async () => {
-        if (!name) {
+        if (!name || !hasFileSelected) {
             api['error']({
-                message: '请先输入姓名',
+                message: '请先输入姓名并选择要上传的视频',
             })
 
             return
@@ -95,7 +108,6 @@ export default () => {
         const key = name + '.' + nameList[nameList.length - 1]
 
         const chunkSize = 1024 * 1024 * 10 // 10m
-        // const chunkSize = 1024 * 1024 * 1024 // 100m
         // const chunkSize = 1024 * 1024 // 1m
         const totalChunks = Math.ceil(fileToUpload.size / chunkSize)
         let currentChunk = 0
@@ -109,7 +121,10 @@ export default () => {
 
         try {
             const uploadedChunkList: Part[] = []
+            setBandWidth(0.1)
             while (currentChunk < totalChunks) {
+                const startTime = new Date().getTime()
+
                 const partNumber = currentChunk + 1
                 const start = currentChunk * chunkSize
                 const end = Math.min(start + chunkSize, fileToUpload.size)
@@ -128,6 +143,9 @@ export default () => {
 
                 setProgress(Math.floor((partNumber / totalChunks) * 100))
 
+                const endTime = new Date().getTime()
+                setBandWidth(chunk.size / (endTime - startTime) / 1000)
+
                 currentChunk++
             }
             await completeUpload(key, uploadId, uploadedChunkList)
@@ -141,6 +159,8 @@ export default () => {
             api['error']({
                 message: '上传失败',
             })
+        } finally {
+            setBandWidth(0)
         }
     }
 
@@ -167,34 +187,33 @@ export default () => {
                 onChange={(e) => setName(e.target.value)}
                 maxLength={5}
             />
-            {hasFileSelected && (
-                <Button
-                    className={
-                        'uploadBtn ' +
-                        (uploadingStatus == UPLOAD_STATUS.UPLOADED
-                            ? 'uploadSuccessBtn'
-                            : '')
-                    }
-                    type="primary"
-                    icon={
-                        uploadingStatus == UPLOAD_STATUS.UPLOADING ? (
-                            <LoadingOutlined />
-                        ) : (
-                            <CloudUploadOutlined />
-                        )
-                    }
-                    onClick={startUpload}
-                    disabled={unableToDelete}
-                >
-                    {uploadBtnText}
-                </Button>
-            )}
+            <Button
+                className={
+                    'uploadBtn ' +
+                    (uploadingStatus == UPLOAD_STATUS.UPLOADED
+                        ? 'uploadSuccessBtn'
+                        : '')
+                }
+                type="primary"
+                icon={
+                    uploadingStatus == UPLOAD_STATUS.UPLOADING ? (
+                        <LoadingOutlined />
+                    ) : (
+                        <CloudUploadOutlined />
+                    )
+                }
+                onClick={startUpload}
+                disabled={unableToDelete}
+            >
+                {uploadBtnText}
+            </Button>
             <Upload
                 className={unableToDelete ? 'unableToDeleteUpload' : ''}
-                accept=".mp4"
+                accept="video/*"
                 listType={hasFileSelected ? 'picture' : 'picture-card'}
-                beforeUpload={() => false}
+                beforeUpload={beforeUpload}
                 fileList={fileList}
+                maxCount={1}
                 onChange={({ fileList }) => {
                     if (unableToDelete) {
                         api['error']({
@@ -218,7 +237,12 @@ export default () => {
                 )}
             </Upload>
             {uploadingStatus != UPLOAD_STATUS.NOT_START && (
-                <Progress percent={progress} />
+                <div className="progressAndSpeedWrapper">
+                    <Progress percent={progress} />
+                    <span className="speed">
+                        上传速度：{bandWidth.toFixed(2)}Mb/s
+                    </span>
+                </div>
             )}
         </>
     )
