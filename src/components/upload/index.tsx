@@ -41,7 +41,7 @@ export default () => {
             api['error']({
                 message: errorMessage,
             })
-            ;(e || window.event).returnValue = errorMessage
+                ; (e || window.event).returnValue = errorMessage
             return errorMessage
         }
 
@@ -112,14 +112,14 @@ export default () => {
         const totalChunks = Math.ceil(fileToUpload.size / chunkSize)
         let currentChunk = 0
 
-        const resOfUploadInit = await initUpload(key)
-        const { UploadId: uploadId } = resOfUploadInit
-
         console.log(
             `File size: ${fileToUpload.size}, total chunks: ${totalChunks}`,
         )
 
         try {
+            const resOfUploadInit = await initUpload(key)
+            const { UploadId: uploadId } = resOfUploadInit
+
             const uploadedChunkList: Part[] = []
             setBandWidth(0.1)
             while (currentChunk < totalChunks) {
@@ -158,6 +158,7 @@ export default () => {
             setUploadingStatus(UPLOAD_STATUS.FAILED)
             api['error']({
                 message: '上传失败',
+                description: '请再次尝试，如多次失败请联系管理员'
             })
         } finally {
             setBandWidth(0)
