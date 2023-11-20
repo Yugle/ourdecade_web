@@ -36,5 +36,17 @@ export default defineConfig({
       content:
         'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
     },
+  ],
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: 'css',
+        // style: true,
+      },
+      'antd',
+    ]
   ]
 });
