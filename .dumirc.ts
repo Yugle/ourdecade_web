@@ -2,6 +2,7 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   themeConfig: {
+    title: 'Our Decade',
     name: 'Our Decade',
     favicon: '/favicon.ico',
     logo: '/logo.png',
