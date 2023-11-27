@@ -26,7 +26,7 @@ features:
 /**
  * inline: true
  */
-if (location.host.startsWith('www')) {
+if (location.hostname.startsWith('www') && location.pathname == '/') {
     document.title += ' - 个人专业学习记录'
 }
 
