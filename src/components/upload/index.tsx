@@ -95,7 +95,7 @@ export default () => {
     const startUpload = async () => {
         if (!name || !hasFileSelected) {
             api['error']({
-                message: (name ? name + ', ' : '') + '请先输入姓名并选择要上传的视频',
+                message: (name ? name + ', 请' : '请先输入姓名并') + '选择要上传的视频',
             })
 
             return
@@ -224,10 +224,10 @@ export default () => {
                     }
 
                     setUploadingStatus(UPLOAD_STATUS.NOT_START)
+                    setFileList(fileList)
+
                     if (fileList.length > 0) {
                         parseThumbnail(fileList)
-                    } else {
-                        setFileList(fileList)
                     }
                 }}
             >
