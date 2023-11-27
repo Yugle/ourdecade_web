@@ -1,5 +1,5 @@
 ---
-title: Our Decade - 我们的十年 - 个人专业学习记录
+title: Our Decade - 我们的十年
 hero:
     title: Our Decade
     description: Our Decade 视频征集计划
@@ -21,3 +21,14 @@ features:
 ---
 
 <Covers><Covers/>
+
+```tsx
+/**
+ * inline: true
+ */
+if (location.host.startsWith('www')) {
+    document.title += ' - 个人专业学习记录'
+}
+
+export default () => <></>
+```
