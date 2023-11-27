@@ -224,10 +224,10 @@ export default () => {
                     }
 
                     setUploadingStatus(UPLOAD_STATUS.NOT_START)
+                    setFileList(fileList)
+
                     if (fileList.length > 0) {
                         parseThumbnail(fileList)
-                    } else {
-                        setFileList(fileList)
                     }
                 }}
             >
