@@ -9,12 +9,12 @@ export default defineConfig({
     nav: [
       // null, 若为null, 则开启navs嗅探模式
       {
-        title: '2022篇',
-        link: '/2022',
-      },
-      {
         title: '往期',
         link: '/summary',
+      },
+      {
+        title: '2023篇征集中',
+        link: '/2023',
       },
       // {
       //   title: '往期',

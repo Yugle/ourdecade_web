@@ -4,10 +4,10 @@ hero:
     title: Our Decade
     description: Our Decade 视频征集计划
     actions:
+        - text: 2023篇
+          link: /2023
         - text: 往期
           link: /summary
-        - text: 2022篇
-          link: /2022
 features:
     - emoji: 🎨
       title: Past
