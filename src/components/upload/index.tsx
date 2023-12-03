@@ -1,7 +1,7 @@
 import {
     CloudUploadOutlined,
     LoadingOutlined,
-    PlusOutlined,
+    VideoCameraAddOutlined,
 } from '@ant-design/icons'
 import { Button, Input, Progress, Upload, UploadFile, notification } from 'antd'
 import { Part } from 'cos-js-sdk-v5'
@@ -25,7 +25,7 @@ export default () => {
     )
     const [bandWidth, setBandWidth] = useState(0)
 
-    const unableToDelete =
+    const unableToEdit =
         uploadingStatus == UPLOAD_STATUS.UPLOADING ||
         uploadingStatus == UPLOAD_STATUS.UPLOADED
 
@@ -33,7 +33,7 @@ export default () => {
 
     useEffect(() => {
         const handleBeforeUnload = (e) => {
-            if (!unableToDelete) {
+            if (!unableToEdit) {
                 return null
             }
 
@@ -41,7 +41,7 @@ export default () => {
             api['error']({
                 message: errorMessage,
             })
-                ; (e || window.event).returnValue = errorMessage
+            ;(e || window.event).returnValue = errorMessage
             return errorMessage
         }
 
@@ -52,10 +52,31 @@ export default () => {
         }
     }, [])
 
+    useEffect(() => {
+        console.log(progress)
+        if (progress >= 100) {
+            setUploadingStatus(UPLOAD_STATUS.UPLOADED)
+            api['success']({
+                message: '上传成功',
+            })
+        }
+    }, [progress])
+
     const beforeUpload = (file: File) => {
-        if (!file.type.startsWith('video/')) {
+        if (
+            !file.type.startsWith('video/') &&
+            !file.type.startsWith('image/')
+        ) {
             api['error']({
-                message: '只支持上传视频文件',
+                message: '只支持上传视频或图片',
+            })
+
+            return Upload.LIST_IGNORE
+        }
+
+        if (fileList?.some((f) => f.name === file.name)) {
+            api['error']({
+                message: '已存在同名文件',
             })
 
             return Upload.LIST_IGNORE
@@ -64,8 +85,8 @@ export default () => {
         return false
     }
 
-    const parseThumbnail = (fileList: UploadFile[]) => {
-        const videoURL = URL.createObjectURL(fileList[0].originFileObj!!)
+    const parseThumbnail = (file: UploadFile) => {
+        const videoURL = URL.createObjectURL(file.originFileObj!!)
         const video = document.createElement('video')
         video.src = videoURL
 
@@ -81,8 +102,9 @@ export default () => {
                     ?.drawImage(video, 0, 0, canvas.width, canvas.height)
 
                 const imageSrc = canvas.toDataURL('image/jpeg')
-                const newFileList = [...fileList]
-                newFileList[0].thumbUrl = imageSrc
+                file.thumbUrl = imageSrc
+                const newFileList = [...(fileList || []), file]
+                console.log({ newFileList })
                 setFileList(newFileList)
 
                 URL.revokeObjectURL(videoURL) // 释放资源
@@ -95,7 +117,9 @@ export default () => {
     const startUpload = async () => {
         if (!name || !hasFileSelected) {
             api['error']({
-                message: (name ? name + ', 请' : '请先输入姓名并') + '选择要上传的视频',
+                message:
+                    (name ? name + ', 请' : '请先输入姓名并') +
+                    '至少选择一个要上传的视频',
             })
 
             return
@@ -103,62 +127,67 @@ export default () => {
 
         setUploadingStatus(UPLOAD_STATUS.UPLOADING)
 
-        const fileToUpload = (fileList!![0] as UploadFile).originFileObj!!
-        const nameList = fileToUpload.name.split('.')
-        const key = name + '.' + nameList[nameList.length - 1]
+        let totalSize = 0
+        fileList.forEach((f) => (totalSize += f.size || 0))
 
         const chunkSize = 1024 * 1024 * 10 // 10m
         // const chunkSize = 1024 * 1024 // 1m
-        const totalChunks = Math.ceil(fileToUpload.size / chunkSize)
-        let currentChunk = 0
 
-        console.log(
-            `File size: ${fileToUpload.size}, total chunks: ${totalChunks}`,
-        )
+        let uploadedChunkSize = 0
 
         try {
-            const resOfUploadInit = await initUpload(key)
-            const { UploadId: uploadId } = resOfUploadInit
-
-            const uploadedChunkList: Part[] = []
             setBandWidth(0.1)
-            while (currentChunk < totalChunks) {
-                const startTime = new Date().getTime()
 
-                const partNumber = currentChunk + 1
-                const start = currentChunk * chunkSize
-                const end = Math.min(start + chunkSize, fileToUpload.size)
-                const chunk = fileToUpload.slice(start, end)
+            fileList.forEach(async (f) => {
+                const fileToUpload = (f as UploadFile).originFileObj!!
+                const key = name + '_' + fileToUpload.name
+                const totalChunks = Math.ceil(fileToUpload.size / chunkSize)
+                let currentChunk = 0
 
-                const uploadRes = await uploadFile(
-                    key,
-                    uploadId,
-                    partNumber,
-                    chunk,
+                const resOfUploadInit = await initUpload(key)
+                const { UploadId: uploadId } = resOfUploadInit
+
+                console.log(
+                    `File name: ${key}, size: ${fileToUpload.size}, total chunks: ${totalChunks}`,
                 )
-                uploadedChunkList.push({
-                    PartNumber: partNumber,
-                    ETag: uploadRes.ETag,
-                })
 
-                setProgress(Math.floor((partNumber / totalChunks) * 100))
+                const uploadedChunkList: Part[] = []
+                while (currentChunk < totalChunks) {
+                    const startTime = new Date().getTime()
 
-                const endTime = new Date().getTime()
-                setBandWidth(chunk.size / (endTime - startTime) / 1000)
+                    const partNumber = currentChunk + 1
+                    const start = currentChunk * chunkSize
+                    const end = Math.min(start + chunkSize, fileToUpload.size)
+                    const chunk = fileToUpload.slice(start, end)
 
-                currentChunk++
-            }
-            await completeUpload(key, uploadId, uploadedChunkList)
-            setProgress(100)
-            setUploadingStatus(UPLOAD_STATUS.UPLOADED)
-            api['success']({
-                message: '上传成功',
+                    const uploadRes = await uploadFile(
+                        key,
+                        uploadId,
+                        partNumber,
+                        chunk,
+                    )
+                    uploadedChunkList.push({
+                        PartNumber: partNumber,
+                        ETag: uploadRes.ETag,
+                    })
+
+                    uploadedChunkSize += chunk.size
+                    setProgress(
+                        Math.floor((uploadedChunkSize / totalSize) * 100),
+                    )
+
+                    const endTime = new Date().getTime()
+                    setBandWidth(chunk.size / (endTime - startTime) / 1000)
+
+                    currentChunk++
+                }
+                await completeUpload(key, uploadId, uploadedChunkList)
             })
         } catch (e) {
             setUploadingStatus(UPLOAD_STATUS.FAILED)
             api['error']({
                 message: '上传失败',
-                description: '请再次尝试，如多次失败请联系管理员'
+                description: '请再次尝试，如多次失败请联系管理员',
             })
         } finally {
             setBandWidth(0)
@@ -189,12 +218,7 @@ export default () => {
                 maxLength={5}
             />
             <Button
-                className={
-                    'uploadBtn ' +
-                    (uploadingStatus == UPLOAD_STATUS.UPLOADED
-                        ? 'uploadSuccessBtn'
-                        : '')
-                }
+                className={'uploadBtn'}
                 type="primary"
                 icon={
                     uploadingStatus == UPLOAD_STATUS.UPLOADING ? (
@@ -204,19 +228,18 @@ export default () => {
                     )
                 }
                 onClick={startUpload}
-                disabled={unableToDelete}
+                disabled={unableToEdit}
             >
                 {uploadBtnText}
             </Button>
             <Upload
-                className={unableToDelete ? 'unableToDeleteUpload' : ''}
-                accept="video/*"
-                listType={hasFileSelected ? 'picture' : 'picture-card'}
+                // multiple // 需要改下面生成缩略图的逻辑
+                accept="video/*, image/*"
+                listType={'picture'}
                 beforeUpload={beforeUpload}
                 fileList={fileList}
-                maxCount={1}
-                onChange={({ fileList }) => {
-                    if (unableToDelete) {
+                onChange={({ file, fileList, event }) => {
+                    if (unableToEdit) {
                         api['error']({
                             message: '视频上传中或已上传，无法删除',
                         })
@@ -224,19 +247,22 @@ export default () => {
                     }
 
                     setUploadingStatus(UPLOAD_STATUS.NOT_START)
-                    setFileList(fileList)
-
-                    if (fileList.length > 0) {
-                        parseThumbnail(fileList)
+                    if (
+                        file.type?.startsWith('video/') &&
+                        fileList.some((f) => f.uid == file.uid)
+                    ) {
+                        parseThumbnail(fileList[fileList.length - 1])
+                    } else {
+                        setFileList(fileList)
                     }
                 }}
             >
-                {!hasFileSelected && (
-                    <div>
-                        <PlusOutlined />
-                        <div style={{ marginTop: 8 }}>选择视频</div>
-                    </div>
-                )}
+                <Button
+                    icon={<VideoCameraAddOutlined />}
+                    disabled={unableToEdit}
+                >
+                    选择文件
+                </Button>
             </Upload>
             {uploadingStatus != UPLOAD_STATUS.NOT_START && (
                 <div className="progressAndSpeedWrapper">
