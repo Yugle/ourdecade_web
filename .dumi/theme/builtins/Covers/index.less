@@ -2,6 +2,41 @@
     margin: 0 !important;
 }
 
+@media (max-width: 768px) {
+    .covers {
+        display: block;
+
+        img {
+            width: 100%;
+            margin: 5px 0;
+        }
+    }
+}
+@media (min-width: 769px) {
+    .covers {
+        display: flex;
+
+        img {
+            width: 33%;
+            margin: 0 10px;
+        }
+    }
+}
+
 .covers {
     width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+
+    img {
+        flex: 1;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
 }
