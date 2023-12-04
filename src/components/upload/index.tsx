@@ -5,6 +5,7 @@ import {
 } from '@ant-design/icons'
 import { Button, Input, Progress, Upload, UploadFile, notification } from 'antd'
 import { Part } from 'cos-js-sdk-v5'
+import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { completeUpload, initUpload, uploadFile } from '../../utils/cos'
 import './index.less'
@@ -53,7 +54,6 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        console.log(progress)
         if (progress >= 100) {
             setUploadingStatus(UPLOAD_STATUS.UPLOADED)
             api['success']({
@@ -140,7 +140,9 @@ export default () => {
 
             fileList.forEach(async (f) => {
                 const fileToUpload = (f as UploadFile).originFileObj!!
-                const key = name + '_' + fileToUpload.name
+                const key =
+                    name + '_' + dayjs().unix() + '_' + fileToUpload.name
+                console.log({ key })
                 const totalChunks = Math.ceil(fileToUpload.size / chunkSize)
                 let currentChunk = 0
 
