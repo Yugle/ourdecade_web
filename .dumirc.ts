@@ -14,7 +14,7 @@ export default defineConfig({
             },
             {
                 title: '2023篇征集中',
-                link: '/2023#上传',
+                link: '/2023',
             },
             // {
             //   title: '往期',
