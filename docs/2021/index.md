@@ -3,8 +3,8 @@ title: 2021篇
 order: 1
 toc: menu
 nav:
-  title: 2021篇
-  order: 2
+    title: 2021篇
+    order: 2
 ---
 
 ## Info
@@ -23,28 +23,28 @@ nav:
 /**
  * inline: true
  */
-import VideoPlayer, { Platform } from '@/components/video_player';
+import VideoPlayer, { Platform } from '@/components/video_player'
 
 export default () => (
-  <VideoPlayer
-    src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
-    shareUrl="https://b23.tv/P0xIByb"
-    platform={Platform.Bilibili}
-  />
-);
+    <VideoPlayer
+        src="//player.bilibili.com/player.html?aid=893093779&bvid=BV1GP4y1J7pP&cid=280149630&page=1&high_quality=1&danmaku=1"
+        shareUrl="https://www.bilibili.com/video/BV1GP4y1J7pP"
+        platform={Platform.Bilibili}
+    />
+)
 ```
 
 ```tsx
 /**
  * inline: true
  */
-import VideoPlayer, { Platform } from '@/components/video_player';
+import VideoPlayer, { Platform } from '@/components/video_player'
 
 export default () => (
-  <VideoPlayer
-    src="https://www.youtube.com/embed/P_xhbtOwsPI"
-    shareUrl="https://youtu.be/P_xhbtOwsPI"
-    platform={Platform.YouTube}
-  />
-);
+    <VideoPlayer
+        src="https://www.youtube.com/embed/P_xhbtOwsPI"
+        shareUrl="https://youtu.be/P_xhbtOwsPI"
+        platform={Platform.YouTube}
+    />
+)
 ```

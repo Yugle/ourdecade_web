@@ -1,34 +1,34 @@
-import React from 'react';
-import BilibiliLogo from '@/assets/logo_bilibili.svg';
-import YoutubeLogo from '@/assets/logo_youtube.svg';
-import './index.less';
+import BilibiliLogo from '@/assets/logo_bilibili.svg'
+import YoutubeLogo from '@/assets/logo_youtube.svg'
+import React from 'react'
+import './index.less'
 
 export enum Platform {
     Bilibili = 'Bilibili',
-    YouTube = 'YouTube'
+    YouTube = 'YouTube',
 }
 
 interface Props {
     src: string
     shareUrl: string
     platform: Platform
-};
+}
 
 export default (props: Props) => {
-    let icon = undefined;
+    let icon = undefined
     switch (props.platform) {
         case Platform.Bilibili:
-            icon = BilibiliLogo;
-            break;
+            icon = BilibiliLogo
+            break
         case Platform.YouTube:
-            icon = YoutubeLogo;
-            break;
-    };
+            icon = YoutubeLogo
+            break
+    }
 
     return (
         <>
-            <div className='titleWrapper'>
-                <a href={props.shareUrl}>
+            <div className="titleWrapper">
+                <a href={props.shareUrl} target="_blank">
                     <img src={icon} alt={`去${props.platform}观看`}></img>
                 </a>
             </div>
@@ -43,5 +43,5 @@ export default (props: Props) => {
                 ></iframe>
             </div>
         </>
-    );
-};
+    )
+}

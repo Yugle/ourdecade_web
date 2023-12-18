@@ -3,8 +3,8 @@ title: 2020篇
 order: 1
 toc: 'menu'
 nav:
-  title: 2020篇
-  order: 1
+    title: 2020篇
+    order: 1
 ---
 
 ## Info
@@ -23,28 +23,28 @@ nav:
 /**
  * inline: true
  */
-import VideoPlayer, { Platform } from '@/components/video_player';
+import VideoPlayer, { Platform } from '@/components/video_player'
 
 export default () => (
-  <VideoPlayer
-    src="//player.bilibili.com/player.html?aid=331110496&bvid=BV1MA411H7tN&cid=280149630&page=1&high_quality=1&danmaku=1"
-    shareUrl="https://b23.tv/MNA2cT8"
-    platform={Platform.Bilibili}
-  />
-);
+    <VideoPlayer
+        src="//player.bilibili.com/player.html?aid=331110496&bvid=BV1MA411H7tN&cid=280149630&page=1&high_quality=1&danmaku=1"
+        shareUrl="https://www.bilibili.com/video/BV1MA411H7tN"
+        platform={Platform.Bilibili}
+    />
+)
 ```
 
 ```tsx
 /**
  * inline: true
  */
-import VideoPlayer, { Platform } from '@/components/video_player';
+import VideoPlayer, { Platform } from '@/components/video_player'
 
 export default () => (
-  <VideoPlayer
-    src="https://www.youtube.com/embed/_ElZriYAqQU"
-    shareUrl="https://youtu.be/_ElZriYAqQU"
-    platform={Platform.YouTube}
-  />
-);
+    <VideoPlayer
+        src="https://www.youtube.com/embed/_ElZriYAqQU"
+        shareUrl="https://youtu.be/_ElZriYAqQU"
+        platform={Platform.YouTube}
+    />
+)
 ```
