@@ -54,5 +54,7 @@ nav:
  */
 import Upload from '@/components/upload'
 
+document.title = '《Our Decade 2023篇》征集中'
+
 export default () => <Upload />
 ```
