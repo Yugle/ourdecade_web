@@ -9,13 +9,13 @@ export default defineConfig({
         nav: [
             // null, 若为null, 则开启navs嗅探模式
             {
-                title: '往期',
-                link: '/summary',
-            },
-            {
-                title: '2023篇征集中',
+                title: '2023篇',
                 link: '/2023',
             },
+            {
+                title: '往期',
+                link: '/summary',
+            }
             // {
             //   title: '往期',
             //   nav: [
