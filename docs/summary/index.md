@@ -10,6 +10,38 @@ nav:
 
 # 往期
 
+## 2023 篇
+
+```tsx
+/**
+ * inline: true
+ */
+import VideoPlayer, { Platform } from '@/components/video_player'
+
+export default () => (
+    <VideoPlayer
+        src="//player.bilibili.com/player.html?aid=453701735&bvid=BV1z5411i74r&cid=1402839849&page=1&high_quality=1&danmaku=1"
+        shareUrl="https://www.bilibili.com/video/BV1z5411i74r"
+        platform={Platform.Bilibili}
+    />
+)
+```
+
+```tsx
+/**
+ * inline: true
+ */
+import VideoPlayer, { Platform } from '@/components/video_player'
+
+export default () => (
+    <VideoPlayer
+        src="https://www.youtube.com/embed/9EifbwVGNaY"
+        shareUrl="https://youtu.be/9EifbwVGNaY"
+        platform={Platform.YouTube}
+    />
+)
+```
+
 ## 2022 篇
 
 ```tsx

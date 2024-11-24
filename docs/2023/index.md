@@ -38,7 +38,7 @@ export default () => (
 )
 ```
 
-<!-- ```tsx
+```tsx
 /**
  * inline: true
  */
@@ -46,9 +46,9 @@ import VideoPlayer, { Platform } from '@/components/video_player'
 
 export default () => (
     <VideoPlayer
-        src="https://www.youtube.com/embed/6Z50cRSIOYw"
-        shareUrl="https://youtu.be/6Z50cRSIOYw"
+        src="https://www.youtube.com/embed/9EifbwVGNaY"
+        shareUrl="https://youtu.be/9EifbwVGNaY"
         platform={Platform.YouTube}
     />
 )
-``` -->
+```
