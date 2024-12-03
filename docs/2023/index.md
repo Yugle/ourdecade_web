@@ -1,5 +1,5 @@
 ---
-title: Our Decade 2023篇
+title: 2023篇
 order: 1
 toc: menu
 nav:

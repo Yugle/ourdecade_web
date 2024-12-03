@@ -9,24 +9,16 @@ export default defineConfig({
         nav: [
             // null, 若为null, 则开启navs嗅探模式
             {
-                title: '2023篇',
-                link: '/2023',
+                title: '2024篇征集中',
+                link: '/2024',
             },
             {
                 title: '往期',
                 link: '/summary',
-            }
-            // {
-            //   title: '往期',
-            //   nav: [
-            //     { title: '2020篇', link: '/2020' },
-            //     { title: '2021篇', link: '/2021' },
-            //   ],
-            // },
-            // { title: '胖虎的Blog', link: 'https://blog.ourdecade.cn' },
+            },
         ],
         socialLinks: {
-            github: 'https://github.com/Yugle/ourdecade_web',
+            // github: 'https://github.com/Yugle/ourdecade_web',
         },
     },
     theme: { '@c-primary': '#1A73E8' },
