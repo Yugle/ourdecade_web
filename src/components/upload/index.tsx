@@ -210,9 +210,9 @@ export default () => {
     }
 
     return (
-        <>
+        <div className="upload-wrapper">
             {contextHolder}
-            你的名字：
+            姓名：
             <Input
                 className="nameInput"
                 value={name}
@@ -274,6 +274,6 @@ export default () => {
                     </span>
                 </div>
             )}
-        </>
+        </div>
     )
 }
