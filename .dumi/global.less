@@ -13,3 +13,20 @@
 .dumi-default-container {
     margin: 0 !important;
 }
+
+#root {
+    min-height: 100vh;
+
+    .dumi-default-doc-layout {
+        height: 100%;
+
+        main {
+            .dumi-default-content {
+                min-height: calc(100vh - 760px);
+                display: flex;
+                flex-direction: column;
+                // justify-content: space-between;
+            }
+        }
+    }
+}
