@@ -30,7 +30,7 @@ const Covers: FC = () => {
     const imageNames = imageContext.keys()
 
     return (
-        <>
+        <div className="covers-wrapper">
             <Divider className="title-divider">
                 <h2>往期封面</h2>
             </Divider>
@@ -45,7 +45,7 @@ const Covers: FC = () => {
                     ></img>
                 ))}
             </div>
-        </>
+        </div>
     )
 }
 
