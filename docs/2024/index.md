@@ -1,5 +1,5 @@
 ---
-title: 2024篇
+title: 2024篇征集中
 order: 1
 toc: menu
 nav:
