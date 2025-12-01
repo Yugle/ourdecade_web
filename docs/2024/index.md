@@ -1,60 +1,50 @@
 ---
-title: 2024篇征集中
+title: 2024篇
 order: 1
 toc: menu
 nav:
-    title: 2024篇征集中
+    title: 2024篇
     order: 3
 ---
 
 ## 序言
 
-2024 年，很多人又踏上了新的旅程。或找到了一份新的工作，或得到了一份好的爱情，或失去了一些重要的人。
-嘿，朋友，我们好久不见你在哪里啊，最近过的怎么样？
+《Our Decade 视频征集计划》来到了第五年，
 
-人生的缩影做微分，便成了每一年的经历。一年中收获了什么，失去了什么，抑或失去的过程中收获了什么，这都是对于你而言的。
-而对于我，对于其他人--你的朋友们，想跟你聊聊，如果用一个词来形容你的 2024，那将会是什么呢？不妨，你跟自己聊聊，顺便跟大家讲讲？
+第五个年头，意味着这趟旅程已经走了一半了。
 
-像往常一样，这个活动主要是对自己的记录。对于你，可以看到自己的变化，意义是不言而喻的；对于我，这或许是我们之间十年的牵绊，等十年后希望我们还能坐在一起，带着自己的爱人和孩子，乐此不疲地畅谈过往。
+我们一直传达的价值观是：回顾虽是在总结过去，但不必过分怀念，请务必珍惜眼前的生活。
 
-今年是 2024 年，我们的人生正在发生转折。时间匆匆流转，明天的人生将在昨天这份土壤上茁壮成长，记忆须存留，而影像是最好的方式。我想，在不远的五年后，你会与我同样庆幸。
+我相信、我们都相信，在不久的将来我们定会再会！
 
-嘿，我的朋友，期待你继续参与或加入我们！希望我能坚持十年，希望你也能。
-
-朱光宇 于 2024.12.8
-
-## 期望
-
-### 视频
-
--   格式：**横屏**拍摄，画面比例为 **16:9**，分辨率最好为 **4k (3840\*2160)** 以上，帧率最好为 **60fps** 以上
-    :::warning{title=注意}
-    为保证成片效果和历史发展性，请在相机设置中完成该配置
-    :::
--   内容：内容随意。可以说这一年发生印象深刻的事、对这一年的总结、对新一年的目标展望和计划、对计划完成时的自己想说的等等
--   时长：随意。具体成片时会尽量保留全部，但不保证
-
-### 照片
-
-希望你在上传视频的同时，同时上传几张对你来说有意义的照片
-
-## 截止和成片时间
-
-12 月 31 日截止征集，1 月 5 日左右成片
-
-## 上传
-
-:::success{title=提示}
-可多次点击 **选择文件** 多个视频、图片进行上传
-上传中请勿刷新页面；若上传长时间无进度，请刷新重试
-请务必在浏览器中上传，微信会对视频有各种限制和压缩
-:::
+## 视频
 
 ```tsx
 /**
  * inline: true
  */
-import Upload from '@/components/upload'
+import VideoPlayer, { Platform } from '@/components/video_player'
 
-export default () => <Upload />
+export default () => (
+    <VideoPlayer
+        src="//player.bilibili.com/player.html?aid=113827773419549&bvid=BV1qJcaeVEbK&cid=28525921123&page=1&high_quality=1&danmaku=1"
+        shareUrl="https://www.bilibili.com/video/BV1z5411i74r"
+        platform={Platform.Bilibili}
+    />
+)
+```
+
+```tsx
+/**
+ * inline: true
+ */
+import VideoPlayer, { Platform } from '@/components/video_player'
+
+export default () => (
+    <VideoPlayer
+        src="https://www.youtube.com/embed/OkaTN1Laeuw"
+        shareUrl="https://youtu.be/OkaTN1Laeuw"
+        platform={Platform.YouTube}
+    />
+)
 ```
