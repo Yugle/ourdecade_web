@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  caddy:
+    build: .
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./ssl:/etc/caddy/ssl:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
