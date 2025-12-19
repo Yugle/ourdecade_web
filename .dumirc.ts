@@ -9,8 +9,8 @@ export default defineConfig({
         nav: [
             // null, 若为null, 则开启navs嗅探模式
             {
-                title: '2024篇',
-                link: '/2024',
+                title: '2025篇征集中',
+                link: '/2025',
             },
             {
                 title: '往期',

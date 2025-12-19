@@ -4,8 +4,8 @@ hero:
     title: Our Decade
     description: Our Decade 视频征集计划
     actions:
-        - text: 2024篇
-          link: /2024
+        - text: 2025篇征集中
+          link: /2025
         - text: 往期
           link: /summary
 # features:
