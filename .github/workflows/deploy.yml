@@ -1,0 +1,77 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.tag.outputs.tag }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: |
+        docker build -t ourdecade_web_app .
+    
+    - name: Save image as tar
+      run: |
+        docker save ourdecade_web_app -o ourdecade_web_app.tar
+        gzip ourdecade_web_app.tar
+        ls -lh ourdecade_web_app.tar.gz
+    
+    - name: Generate tag
+      id: tag
+      run: |
+        TAG="app-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA:0:8}"
+        echo "tag=${TAG}" >> $GITHUB_OUTPUT
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ourdecade_web_app
+        path: ourdecade_web_app.tar.gz
+        retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download image artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ourdecade_web_app
+        path: .
+    
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@v0.1.7
+      env:
+        IMAGE_TAG: ${{ needs.build.outputs.image-tag }}
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        script: |
+          set -e
+          cd ${{ secrets.PROJECT_PATH }}
+          
+          # 清理空间
+          docker system prune -af
+          
+          # 传输并加载镜像
+          echo "Loading Docker image..."
+          gunzip -c ourdecade_web_app.tar.gz | docker load
+          
+          echo "Image loaded successfully"
+          
+          # 重启服务
+          docker-compose down || true
+          docker-compose up -d
+          
+          echo "Deployment completed!"
