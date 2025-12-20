@@ -1,9 +1,12 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  app:
+    image: ourdecade_web_app:latest
+    restart: unless-stopped
+    container_name: ourdecade_web_app
   caddy:
-    build: .
-    container_name: caddy
+    image: caddy:alpine
     restart: unless-stopped
     ports:
       - "80:80"
