@@ -1,77 +1,171 @@
-name: Deploy
+name: Deploy to Production
 
 on:
-  push:
-    branches: [main, master]
+    push:
+        branches: [main, master]
+    workflow_dispatch: # 允许手动触发
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      image-tag: ${{ steps.tag.outputs.tag }}
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Build Docker image
-      run: |
-        docker build -t ourdecade_web_app .
-    
-    - name: Save image as tar
-      run: |
-        docker save ourdecade_web_app -o ourdecade_web_app.tar
-        gzip ourdecade_web_app.tar
-        ls -lh ourdecade_web_app.tar.gz
-    
-    - name: Generate tag
-      id: tag
-      run: |
-        TAG="app-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA:0:8}"
-        echo "tag=${TAG}" >> $GITHUB_OUTPUT
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ourdecade_web_app
-        path: ourdecade_web_app.tar.gz
-        retention-days: 1
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        env:
+            IMAGE_NAME: ourdecade_web_app:latest
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Download image artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: ourdecade_web_app
-        path: .
-    
-    - name: Deploy to Server
-      uses: appleboy/ssh-action@v0.1.7
-      env:
-        IMAGE_TAG: ${{ needs.build.outputs.image-tag }}
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USER }}
-        key: ${{ secrets.DEPLOY_KEY }}
-        script: |
-          set -e
-          cd ${{ secrets.PROJECT_PATH }}
-          
-          # 清理空间
-          docker system prune -af
-          
-          # 传输并加载镜像
-          echo "Loading Docker image..."
-          gunzip -c ourdecade_web_app.tar.gz | docker load
-          
-          echo "Image loaded successfully"
-          
-          # 重启服务
-          docker-compose down || true
-          docker-compose up -d
-          
-          echo "Deployment completed!"
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Build Docker image
+              run: |
+                  echo "=== 开始构建 Docker 镜像 ==="
+                  # 关键：通过 --build-arg 传递环境变量到 Dockerfile
+                  docker build \
+                    --build-arg UMI_APP_COS_SECRET_BUCKET=${{ secrets.UMI_APP_COS_SECRET_BUCKET }} \
+                    --build-arg UMI_APP_COS_SECRET_ID=${{ secrets.UMI_APP_COS_SECRET_ID }} \
+                    --build-arg UMI_APP_COS_SECRET_KEY=${{ secrets.UMI_APP_COS_SECRET_KEY }} \
+                    --build-arg UMI_APP_COS_SECRET_REGION=${{ secrets.UMI_APP_COS_SECRET_REGION }} \
+                    -t $IMAGE_NAME .
+
+                  echo "构建后的镜像列表："
+                  docker images | grep ourdecade_web_app
+
+                  if [ $? -ne 0 ]; then
+                    echo "❌ 镜像构建失败：未找到 ourdecade_web_app 镜像"
+                    exit 1
+                  fi
+                  echo "✅ 镜像构建成功"
+
+            # 以下步骤保持不变（Save and compress image / Upload / Deploy 等）
+            - name: Save and compress image
+              run: |
+                  echo "=== 保存并压缩镜像 ==="
+                  docker save $IMAGE_NAME | gzip > image.tar.gz
+
+                  echo "镜像文件信息："
+                  ls -lh image.tar.gz
+                  FILESIZE=$(stat -c%s "image.tar.gz")
+                  echo "文件大小: $FILESIZE 字节"
+
+                  if [ $FILESIZE -lt 1000 ]; then
+                    echo "❌ 错误: 镜像文件太小，构建可能失败"
+                    exit 1
+                  fi
+
+                  if gzip -t image.tar.gz; then
+                    echo "✅ 镜像文件完整性验证通过"
+                  else
+                    echo "❌ 错误: 镜像文件损坏"
+                    exit 1
+                  fi
+
+            - name: Debug - Local file check
+              run: |
+                  echo "=== 本地文件调试信息 ==="
+                  md5sum image.tar.gz
+                  du -sh image.tar.gz
+
+            - name: Upload image to server via SCP
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.DEPLOY_HOST }}
+                  username: ${{ secrets.DEPLOY_USER }}
+                  key: ${{ secrets.DEPLOY_KEY }}
+                  port: ${{ secrets.DEPLOY_PORT || 22 }}
+                  source: 'image.tar.gz'
+                  target: '${{ secrets.PROJECT_PATH }}/'
+                  debug: true
+
+            - name: Deploy application on server
+              uses: appleboy/ssh-action@v0.1.7
+              with:
+                  host: ${{ secrets.DEPLOY_HOST }}
+                  username: ${{ secrets.DEPLOY_USER }}
+                  key: ${{ secrets.DEPLOY_KEY }}
+                  port: ${{ secrets.DEPLOY_PORT || 22 }}
+                  debug: true
+                  script: |
+                      PROJECT_PATH="${{ secrets.PROJECT_PATH }}"
+                      set -eo pipefail
+                      echo "=== 开始部署流程 ==="
+                      echo "部署时间: $(date)"
+                      echo "Git Commit SHA: ${{ github.sha }}"
+                      echo "部署目录: $PROJECT_PATH"
+
+                      mkdir -p $PROJECT_PATH
+                      cd $PROJECT_PATH
+                      echo "当前工作目录: $(pwd)"
+
+                      if [ ! -f image.tar.gz ]; then
+                        echo "❌ 错误: 镜像文件未上传成功"
+                        echo "当前目录文件列表："
+                        ls -la
+                        exit 1
+                      fi
+
+                      FILESIZE=$(stat -c%s "image.tar.gz")
+                      echo "镜像文件大小: $FILESIZE 字节"
+                      md5sum image.tar.gz
+
+                      if [ $FILESIZE -lt 1000 ]; then
+                        echo "❌ 错误: 镜像文件大小异常（小于1KB）"
+                        exit 1
+                      fi
+
+                      if ! gzip -t image.tar.gz; then
+                        echo "❌ 错误: 镜像文件压缩损坏"
+                        exit 1
+                      fi
+                      echo "✅ 镜像文件验证通过"
+
+                      if [ -d .git ]; then
+                        git pull origin main || git pull origin master
+                      else
+                        echo "⚠️  非Git仓库，跳过代码拉取"
+                      fi
+
+                      echo -e "\n=== 5. 清理Docker环境 ==="
+                      docker system prune -af --volumes 2>/dev/null || true
+
+                      echo -e "\n=== 6. 加载Docker镜像 ==="
+                      if gunzip -c image.tar.gz | docker load; then
+                        echo "✅ 镜像加载成功"
+                        docker images | grep ourdecade_web_app
+                      else
+                        echo "❌ 镜像加载失败"
+                        exit 1
+                      fi
+
+                      echo -e "\n=== 7. 启动服务 ==="
+                      COMPOSE_CMD="docker compose"
+                      if ! command -v $COMPOSE_CMD &> /dev/null; then
+                        COMPOSE_CMD="docker-compose"
+                      fi
+                      echo "使用的Compose命令: $COMPOSE_CMD"
+
+                      $COMPOSE_CMD down 2>/dev/null || true
+                      $COMPOSE_CMD up -d
+
+                      echo -e "\n=== 8. 验证部署结果 ==="
+                      sleep 8
+                      $COMPOSE_CMD ps
+                      echo -e "\n容器日志（最后10行）："
+                      $COMPOSE_CMD logs --tail=10 web
+
+                      echo -e "\n=== 9. 健康检查 ==="
+                      if curl -f -m 10 http://localhost >/dev/null 2>&1; then
+                        echo "✅ HTTP 服务健康检查通过"
+                      elif curl -f -m 10 https://localhost --insecure >/dev/null 2>&1; then
+                        echo "✅ HTTPS 服务健康检查通过（忽略证书）"
+                      else
+                        echo "⚠️  服务健康检查未通过，但容器已启动"
+                        echo "容器状态详情："
+                        docker inspect ourdecade_web_app --format '{{.State.Status}}'
+                      fi
+
+                      echo -e "\n=== 10. 清理临时文件 ==="
+                      rm -f image.tar.gz
+
+                      echo -e "\n🎉 部署流程全部完成！"

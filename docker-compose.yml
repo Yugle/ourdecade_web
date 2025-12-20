@@ -1,18 +1,15 @@
 version: "3.8"
 
 services:
-  app:
+  web:
     image: ourdecade_web_app:latest
     restart: unless-stopped
     container_name: ourdecade_web_app
-  caddy:
-    image: caddy:alpine
-    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # 如果需要持久化 SSL 证书，可以挂载
       - ./ssl:/etc/caddy/ssl:ro
       - caddy_data:/data
       - caddy_config:/config
