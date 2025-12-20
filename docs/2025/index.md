@@ -7,6 +7,17 @@ nav:
     order: 3
 ---
 
+```tsx
+/**
+ * inline: true
+ */
+import MusicPlayer from '@/components/music_player'
+
+export default () => (
+    <MusicPlayer src="//music.163.com/outchain/player?type=2&id=1357428232&auto=1&height=66" />
+)
+```
+
 ## 序言
 
 嘿，朋友，我们好久不见你在哪里啊，最近过得怎么样？
@@ -50,6 +61,8 @@ nav:
 可多次点击 **选择文件** 多个视频、图片进行上传
 上传中请勿刷新页面；若上传长时间无进度，请刷新重试
 请务必在浏览器中上传，微信会对视频有各种限制和压缩
+
+若上传有问题，推荐使用**夸克网盘**
 :::
 
 ```tsx
@@ -59,15 +72,4 @@ nav:
 import Upload from '@/components/upload'
 
 export default () => <Upload />
-```
-
-```tsx
-/**
- * inline: true
- */
-import MusicPlayer from '@/components/music_player'
-
-export default () => (
-    <MusicPlayer src="//music.163.com/outchain/player?type=2&id=1357428232&auto=1&height=66" />
-)
 ```

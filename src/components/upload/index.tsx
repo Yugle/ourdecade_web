@@ -3,7 +3,7 @@ import {
     LoadingOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons'
-import { Button, Input, Progress, Upload, UploadFile, notification } from 'antd'
+import { Button, Input, Progress, Space, Upload, UploadFile, notification } from 'antd'
 import { Part } from 'cos-js-sdk-v5'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -42,7 +42,7 @@ export default () => {
             api['error']({
                 message: errorMessage,
             })
-            ;(e || window.event).returnValue = errorMessage
+                ; (e || window.event).returnValue = errorMessage
             return errorMessage
         }
 
@@ -212,13 +212,15 @@ export default () => {
     return (
         <div className="upload-wrapper">
             {contextHolder}
-            姓名：
-            <Input
-                className="nameInput"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={5}
-            />
+            <span className="nameInputWrapper">
+                姓名：
+                <Input
+                    className="nameInput"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    maxLength={5}
+                />
+            </span>
             <Button
                 className={'uploadBtn'}
                 type="primary"
