@@ -4,7 +4,7 @@ hero:
     title: Our Decade
     description: Our Decade 视频征集计划
     actions:
-        - text: 2025篇征集中
+        - text: 2025篇
           link: /2025
         - text: 往期
           link: /summary
@@ -20,7 +20,7 @@ hero:
 #       description: 期盼的意义，是让沉淀更加厚重、让未来更不迷茫
 ---
 
-<Covers><Covers/>
+<Covers />
 
 ```tsx
 /**

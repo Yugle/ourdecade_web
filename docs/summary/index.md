@@ -10,6 +10,23 @@ nav:
 
 # 往期
 
+## 2025 篇
+
+```tsx
+/**
+ * inline: true
+ */
+import VideoPlayer, { Platform } from '@/components/video_player'
+
+export default () => (
+    <VideoPlayer
+        src="//player.bilibili.com/player.html?isOutside=true&aid=115877496232659&bvid=BV1iy6fBZEHg&cid=35365392057&p=1&high_quality=1&danmaku=1"
+        shareUrl="https://www.bilibili.com/video/BV1iy6fBZEHg"
+        platform={Platform.Bilibili}
+    />
+)
+```
+
 ## 2024 篇
 
 ```tsx

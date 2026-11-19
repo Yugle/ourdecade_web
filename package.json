@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "build": "dumi build",
-        "dev": "dumi dev",
+        "dev": "PORT=8002 dumi dev",
         "prepare": "husky install && dumi setup",
         "start": "set NODE_OPTIONS=--openssl-legacy-provider && yarn dev"
     },
