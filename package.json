@@ -19,8 +19,8 @@
         ]
     },
     "dependencies": {
-        "antd": "^4.24.14",
         "@ant-design/icons": "^5.0.0",
+        "antd": "^4.24.14",
         "babel-plugin-import": "^1.13.8",
         "cos-js-sdk-v5": "^1.4.21",
         "dayjs": "^1.11.10"
@@ -28,7 +28,7 @@
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
         "@commitlint/config-conventional": "^17.1.0",
-        "dumi": "^2.1.22",
+        "dumi": "^2.4.57",
         "husky": "^8.0.1",
         "less-loader": "^11.1.0",
         "lint-staged": "^13.0.3",
