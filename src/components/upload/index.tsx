@@ -1,9 +1,20 @@
 import {
+    CheckOutlined,
     CloudUploadOutlined,
+    CopyOutlined,
     LoadingOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons'
-import { Button, Input, Progress, Space, Upload, UploadFile, notification } from 'antd'
+import {
+    Button,
+    Input,
+    Progress,
+    Space,
+    Upload,
+    UploadFile,
+    message,
+    notification,
+} from 'antd'
 import { Part } from 'cos-js-sdk-v5'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -25,12 +36,76 @@ export default () => {
         UPLOAD_STATUS.NOT_START,
     )
     const [bandWidth, setBandWidth] = useState(0)
+    const [isWeChat, setIsWeChat] = useState(false)
+    const [copied, setCopied] = useState(false)
 
     const unableToEdit =
         uploadingStatus == UPLOAD_STATUS.UPLOADING ||
         uploadingStatus == UPLOAD_STATUS.UPLOADED
 
     const [api, contextHolder] = notification.useNotification()
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const ua = window.navigator.userAgent.toLowerCase()
+            const isWxUA = /micromessenger/i.test(ua)
+            const isDebug = /[?&](wx|wx_debug)=1/.test(window.location.search)
+            if (isWxUA || isDebug) {
+                setIsWeChat(true)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isWeChat) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isWeChat])
+
+    const handleCopyLink = () => {
+        if (typeof window === 'undefined') return
+        const url = window.location.href
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+                .writeText(url)
+                .then(() => {
+                    setCopied(true)
+                    message.success('链接已复制，请在浏览器中打开')
+                    setTimeout(() => setCopied(false), 3000)
+                })
+                .catch(() => {
+                    fallbackCopy(url)
+                })
+        } else {
+            fallbackCopy(url)
+        }
+    }
+
+    const fallbackCopy = (text: string) => {
+        try {
+            const textArea = document.createElement('textarea')
+            textArea.value = text
+            textArea.style.position = 'fixed'
+            textArea.style.top = '0'
+            textArea.style.left = '0'
+            textArea.style.opacity = '0'
+            document.body.appendChild(textArea)
+            textArea.focus()
+            textArea.select()
+            document.execCommand('copy')
+            document.body.removeChild(textArea)
+            setCopied(true)
+            message.success('链接已复制，请在浏览器中打开')
+            setTimeout(() => setCopied(false), 3000)
+        } catch (err) {
+            message.error('复制失败，请点击右上角【···】并在浏览器中打开')
+        }
+    }
 
     useEffect(() => {
         const handleBeforeUnload = (e) => {
@@ -212,6 +287,57 @@ export default () => {
     return (
         <div className="upload-wrapper">
             {contextHolder}
+
+            {isWeChat && (
+                <div className="wx-guide-overlay">
+                    <div className="wx-guide-arrow-box">
+                        <div className="wx-arrow-text">
+                            点击右上角 <strong>···</strong>
+                            <br />
+                            选择 <strong>在浏览器打开</strong>
+                        </div>
+                        <svg
+                            className="wx-arrow-svg"
+                            viewBox="0 0 60 60"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M 8 52 C 20 52, 46 42, 48 14"
+                                stroke="#ffffff"
+                                strokeWidth="3.5"
+                                strokeLinecap="round"
+                            />
+                            <path
+                                d="M 32 20 L 48 10 L 56 26"
+                                stroke="#ffffff"
+                                strokeWidth="3.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <div className="wx-guide-content">
+                        <div className="wx-guide-desc">
+                            微信上传会压缩视频画质
+                            <br />
+                            请使用手机浏览器打开
+                        </div>
+                        <Button
+                            type="primary"
+                            icon={
+                                copied ? <CheckOutlined /> : <CopyOutlined />
+                            }
+                            className="wx-copy-btn"
+                            onClick={handleCopyLink}
+                        >
+                            {copied ? '已复制' : '复制链接'}
+                        </Button>
+                    </div>
+                </div>
+            )}
+
             <span className="nameInputWrapper">
                 姓名：
                 <Input
